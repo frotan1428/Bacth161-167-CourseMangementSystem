@@ -9,6 +9,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CourseServiceImpl {
+public class CourseServiceImpl implements CourseService{
+
+    @Autowired
+    private CourseRepository courseRepository;
+
+
+    @Override
+    public void saveCourse(Course course) {
+        courseRepository.save(course);
+
+    }
+
+    @Override
+    public List<Course> getAllCourse() {
+        return courseRepository.getAll();
+    }
+
 
 }

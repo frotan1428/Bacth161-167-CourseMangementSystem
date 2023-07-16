@@ -12,6 +12,38 @@ import java.util.Optional;
 
 
 @Repository
-public class CourseRepositoryImpl  {
+public class CourseRepositoryImpl  implements CourseRepository {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    @Override
+    public void save(Course course) {
+
+       Session session = sessionFactory.openSession();
+      Transaction tx= session.beginTransaction();
+
+      session.saveOrUpdate(course);//it will be update   the object if is exist but if it is not exist it will be save the object
+
+      tx.commit();
+      session.close();
+
+    }
+
+    @Override
+    public List<Course> getAll() {
+
+        Session session = sessionFactory.openSession();
+        Transaction tx= session.beginTransaction();
+
+       List<Course> courseList = session.createQuery("FROM Course").getResultList();
+
+        tx.commit();
+        session.close();
+        return courseList;
+    }
+
+
+
 
 }
