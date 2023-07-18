@@ -44,6 +44,33 @@ public class CourseRepositoryImpl  implements CourseRepository {
     }
 
 
+    @Override
+    public Optional<Course> findById(Long id) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        Course course = session.get(Course.class, id);
+
+        Optional<Course> optCourse = Optional.ofNullable(course);
+        //if it takes a null value, it says throw an exception. Instead of null, an empty optional is returned.
+
+        tx.commit();
+        session.close();
+        return optCourse;
+
+    }
+
+    @Override
+    public void delete(Long id) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = session.beginTransaction();
+        Course course=session.load(Course.class,id);
+        session.delete(course);
+
+        tx.commit();
+        session.close();
+    }
+
+
 
 
 }

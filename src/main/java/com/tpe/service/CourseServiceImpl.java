@@ -26,5 +26,17 @@ public class CourseServiceImpl implements CourseService{
         return courseRepository.getAll();
     }
 
+    @Override
+    public Course findCourseById(Long id) {
+        Course course=courseRepository.findById(id).
+                orElseThrow(()->new ResourceNotFoundException("Resource Not Found By id "+ id));
+        return course;
+    }
+
+    @Override
+    public void deleteCourse(Long id) {
+        courseRepository.delete(id);
+
+    }
 
 }

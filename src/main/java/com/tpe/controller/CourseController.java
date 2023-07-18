@@ -5,11 +5,9 @@ import com.tpe.domain.Course;
 import com.tpe.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -54,6 +52,21 @@ public class CourseController {
       return mav;
 
     }
+
+    @GetMapping("/update")
+    public String showUpdateForm(@RequestParam("id")Long id, Model model){
+        Course course=courseService.findCourseById(id);
+        model.addAttribute("course",course);
+        return "courseForm";
+    }
+
+
+    @GetMapping("/delete/{id}")
+    public String deleteCourse(@PathVariable("id") Long id){
+        courseService.deleteCourse(id);
+        return "redirect:/courses";
+    }
+
 
 
 
